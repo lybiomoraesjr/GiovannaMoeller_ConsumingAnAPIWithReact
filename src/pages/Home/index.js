@@ -1,6 +1,7 @@
 import { Container, MovieList, Movie } from "./styles";
 import { APIKey } from "../../config/key";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const imagePath = "https://image.tmdb.org/t/p/w500/";
@@ -25,12 +26,12 @@ function Home() {
         {movies.map((movie) => {
           return (
             <Movie key={movie.id}>
-              <a href="https://google.com.br">
+              <Link to={`/details/${movie.id}`}>
                 <img
                   src={`${imagePath}${movie.poster_path}`}
                   alt={movie.title}
                 />
-              </a>
+              </Link>
               <span>{movie.title}</span>
             </Movie>
           );
