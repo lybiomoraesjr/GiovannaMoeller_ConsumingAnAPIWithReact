@@ -1,44 +1,21 @@
 import { Container, MovieList, Movie } from "./styles";
+import { APIKey } from "../../config/key";
+import { useState, useEffect } from "react";
 
 function Home() {
-  const movies = [
-    {
-      id: 1,
-      title: "Spider Man",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/2dd45c7f45bd772247638e4d70e36b8fc8929bfda829a0258ccb6923e7fea912.jpg",
-    },
-    {
-      id: 2,
-      title: "Batman",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/2dd45c7f45bd772247638e4d70e36b8fc8929bfda829a0258ccb6923e7fea912.jpg",
-    },
-    {
-      id: 3,
-      title: "Avengers",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/2dd45c7f45bd772247638e4d70e36b8fc8929bfda829a0258ccb6923e7fea912.jpg",
-    },
-    {
-      id: 1,
-      title: "Spider Man",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/2dd45c7f45bd772247638e4d70e36b8fc8929bfda829a0258ccb6923e7fea912.jpg",
-    },
-    {
-      id: 2,
-      title: "Batman",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/2dd45c7f45bd772247638e4d70e36b8fc8929bfda829a0258ccb6923e7fea912.jpg",
-    },
-    {
-      id: 3,
-      title: "Avengers",
-      image_url:
-        "https://m.media-amazon.com/images/S/pv-target-images/2dd45c7f45bd772247638e4d70e36b8fc8929bfda829a0258ccb6923e7fea912.jpg",
-    },
-  ];
+  const imagePath = "https://image.tmdb.org/t/p/w500/";
+
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    // consumir a api...
+
+    fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${APIKey}&language=en-US`
+    )
+      .then((response) => response.json())
+      .then((data) => setMovies(data.results));
+  }, []);
 
   return (
     <Container>
@@ -49,7 +26,10 @@ function Home() {
           return (
             <Movie key={movie.id}>
               <a href="https://google.com.br">
-                <img src={movie.image_url} alt={movie.title} />
+                <img
+                  src={`${imagePath}${movie.poster_path}`}
+                  alt={movie.title}
+                />
               </a>
               <span>{movie.title}</span>
             </Movie>
